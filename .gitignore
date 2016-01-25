@@ -1,0 +1,17 @@
+*~ 
+trash/
+
+# Ignore files used in estimation
+g1.mat
+g2.mat
+g3.mat
+H.dat
+
+# Ignore large output files
+save/*
+!mode_in
+
+# Ignore directories for user-generate output
+figures/*tex
+figures/*pdf
+graphs/*
