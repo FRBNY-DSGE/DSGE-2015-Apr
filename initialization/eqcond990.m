@@ -85,7 +85,7 @@ G1(nevol,qk_t) = zeta_nqk;
 G1(nevol,kbar_t) = zeta_nqk;
 G1(nevol,n_t) = zeta_nn;
 G1(nevol,R_t) = -zeta_nR;%BUG FIXED -- TERM ADDED ON 9/27/11
-G1(nevol,b_t) = -zeta_nR;
+G1(nevol,b_t) = -zeta_nR*(-(sigmac*(1+h*exp(-zstar)))/(1-h*exp(-zstar)));% BUG FIXED -- TERM NORMALIZED ON 9/15/16
 
 %%* flexible prices and wages - ASSUME NO FINANCIAL FRICTIONS
 G0(capval_f,E_rk_f) = -rkstar/(rkstar+1-del);
@@ -223,9 +223,10 @@ G0(msub_f,z_t) = h*exp(-zstar)/( 1-h*exp(-zstar) );
 G0(wage,w_t)    = 1;
 G0(wage,muw_t)  = (1-zeta_w*bet*exp((1-sigmac)*zstar))*(1-zeta_w)/(zeta_w*((law-1)*epsw+1))*1/(1+bet*exp((1-sigmac)*zstar));
 G0(wage,pi_t)   = (1+iota_w*bet*exp((1-sigmac)*zstar))*1/(1+bet*exp((1-sigmac)*zstar));
+G0(wage,z_t)    = (1+iota_w*bet*exp((1-sigmac)*zstar))*1/(1+bet*exp((1-sigmac)*zstar)); %BUG FIXED -- TERM CORRECTED ON 9/15/16
 G1(wage,w_t)    = 1/(1+bet*exp((1-sigmac)*zstar));
-G0(wage,z_t)    = 1/(1+bet*exp((1-sigmac)*zstar));
 G1(wage,pi_t)   = iota_w*1/(1+bet*exp((1-sigmac)*zstar));
+G1(wage,z_t)    = iota_w*1/(1+bet*exp((1-sigmac)*zstar)); %BUG FIXED -- TERM ADDED ON 9/15/16
 G0(wage,E_w)    = -bet*exp((1-sigmac)*zstar)*1/(1+bet*exp((1-sigmac)*zstar));
 %G0(wage,ztil_t) = -( 1/(1-alp) )*(rho_z-1)*bet*exp((1-sigmac)*zstar)*1/(1+bet*exp((1-sigmac)*zstar));
 G0(wage,E_z) = -bet*exp((1-sigmac)*zstar)*1/(1+bet*exp((1-sigmac)*zstar));
