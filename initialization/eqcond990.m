@@ -85,7 +85,7 @@ G1(nevol,qk_t) = zeta_nqk;
 G1(nevol,kbar_t) = zeta_nqk;
 G1(nevol,n_t) = zeta_nn;
 G1(nevol,R_t) = -zeta_nR;%BUG FIXED -- TERM ADDED ON 9/27/11
-G1(nevol,b_t) = -zeta_nR*(-(sigmac*(1+h*exp(-zstar)))/(1-h*exp(-zstar)));% BUG FIXED -- TERM NORMALIZED ON 9/15/16
+G1(nevol,b_t) = zeta_nR*((sigmac*(1+h*exp(-zstar)))/(1-h*exp(-zstar)));% BUG FIXED -- TERM NORMALIZED ON 01/03/17
 
 %%* flexible prices and wages - ASSUME NO FINANCIAL FRICTIONS
 G0(capval_f,E_rk_f) = -rkstar/(rkstar+1-del);
@@ -105,7 +105,7 @@ G0(output,L_t) = -Bigphi*(1-alp);
 %G0(output,ztil_t) = - ( Bigphi-1 ) / (1-alp);  % See supersticky section on adding long run changes to productivity
 
 %%* flexible prices and wages **/
-G0(output_f,y_f_t ) =  1; 
+G0(output_f,y_f_t ) =  1;
 G0(output_f,k_f_t) = -Bigphi*alp;
 G0(output_f,L_f_t) = -Bigphi*(1-alp);
 %G0(output_f,ztil_t) = - ( Bigphi-1 ) / (1-alp); % See supersticky section on adding long run changes to productivity
@@ -217,16 +217,15 @@ G1(msub_f,c_f_t) = h*exp(-zstar)/( 1-h*exp(-zstar) );
 G0(msub_f,z_t) = h*exp(-zstar)/( 1-h*exp(-zstar) );
 
 %%********************************************
-%**     12. Evolution of Wages 
+%**     12. Evolution of Wages
 %**********************************************/
 %%* sticky prices and wages **/
 G0(wage,w_t)    = 1;
 G0(wage,muw_t)  = (1-zeta_w*bet*exp((1-sigmac)*zstar))*(1-zeta_w)/(zeta_w*((law-1)*epsw+1))*1/(1+bet*exp((1-sigmac)*zstar));
 G0(wage,pi_t)   = (1+iota_w*bet*exp((1-sigmac)*zstar))*1/(1+bet*exp((1-sigmac)*zstar));
-G0(wage,z_t)    = (1+iota_w*bet*exp((1-sigmac)*zstar))*1/(1+bet*exp((1-sigmac)*zstar)); %BUG FIXED -- TERM CORRECTED ON 9/15/16
 G1(wage,w_t)    = 1/(1+bet*exp((1-sigmac)*zstar));
+G0(wage,z_t)    = 1/(1+bet*exp((1-sigmac)*zstar));
 G1(wage,pi_t)   = iota_w*1/(1+bet*exp((1-sigmac)*zstar));
-G1(wage,z_t)    = iota_w*1/(1+bet*exp((1-sigmac)*zstar)); %BUG FIXED -- TERM ADDED ON 9/15/16
 G0(wage,E_w)    = -bet*exp((1-sigmac)*zstar)*1/(1+bet*exp((1-sigmac)*zstar));
 %G0(wage,ztil_t) = -( 1/(1-alp) )*(rho_z-1)*bet*exp((1-sigmac)*zstar)*1/(1+bet*exp((1-sigmac)*zstar));
 G0(wage,E_z) = -bet*exp((1-sigmac)*zstar)*1/(1+bet*exp((1-sigmac)*zstar));
@@ -234,7 +233,7 @@ G0(wage,E_pi)   = -bet*exp((1-sigmac)*zstar)*1/(1+bet*exp((1-sigmac)*zstar));
 G0(wage,law_t)  = -1;
 
 %%* flexible prices and wages **/
-%%* not necessary **/ 
+%%* not necessary **/
 
 %%*********************************************
 %**    13. Monetary Policy Rule
@@ -292,7 +291,7 @@ G0(eq_ztil,ztil_t) = 1;
 G1(eq_ztil,ztil_t) = rho_z;
  PSI(eq_ztil,z_sh) = 1;
 
-% Extra term for long run changes to productivity; added by MDC 
+% Extra term for long run changes to productivity; added by MDC
 G0(eq_zp, zp_t) = 1;
 G1(eq_zp, zp_t) = rho_zp;
 PSI(eq_zp, zp_sh) = 1;
@@ -302,7 +301,7 @@ G0(eq_g,g_t)  =  1;
 G1(eq_g,g_t)  =  rho_g;
  PSI(eq_g,g_sh)  =  1;
  PSI(eq_g,z_sh)  =  eta_gz;
- 
+
 %%* asset shock **/
 G0(eq_b,b_t)  =  1;
 G1(eq_b,b_t)  =  rho_b;
@@ -318,16 +317,16 @@ G0(eq_laf,laf_t)  =  1;
 G1(eq_laf,laf_t)  =  rho_laf;
 G1(eq_laf,laf_t1) =  -eta_laf;
  PSI(eq_laf,laf_sh)  =  1;
- 
+
 G0(eq_laf1,laf_t1) = 1;
  PSI(eq_laf1,laf_sh ) = 1;
- 
+
 %/** wage mark-up shock **/
 G0(eq_law,law_t)  =  1;
 G1(eq_law,law_t)  =  rho_law;
 G1(eq_law,law_t1) =  -eta_law;
  PSI(eq_law,law_sh)  =  1;
- 
+
 G0(eq_law1,law_t1) = 1;
  PSI(eq_law1,law_sh ) = 1;
 
@@ -336,28 +335,28 @@ G0(eq_rm,rm_t) = 1;
 G1(eq_rm,rm_t) = rho_rm;
  PSI(eq_rm,rm_sh) = 1;
 
- 
+
 %FINANCIAL FRICTIONS:
 
 %% sigw shock
 G0(eq_sigw,sigw_t) = 1;
-G1(eq_sigw,sigw_t) = rho_sigw; 
+G1(eq_sigw,sigw_t) = rho_sigw;
 PSI(eq_sigw,sigw_sh) = 1;
 
 
 %% mue shock
 G0(eq_mue,mue_t) = 1;
-G1(eq_mue,mue_t) = rho_mue; 
+G1(eq_mue,mue_t) = rho_mue;
 PSI(eq_mue,mue_sh) = 1;
 
 
 %% gamm shock
 G0(eq_gamm,gamm_t) = 1;
-G1(eq_gamm,gamm_t) = rho_gamm; 
+G1(eq_gamm,gamm_t) = rho_gamm;
 PSI(eq_gamm,gamm_sh) = 1;
- 
 
-%% long term inflation expectations 
+
+%% long term inflation expectations
  %/** pistar **/
 G0(eq_pist,pist_t) = 1;
 G1(eq_pist,pist_t) = rho_pist;
@@ -368,7 +367,7 @@ G1(eq_pist,pist_t) = rho_pist;
 if exist('nant','var')
 
   if nant > 0
-        
+
     % This section adds the anticipated shocks. There is one state for all the
     % anticipated shocks that will hit in a given period (i.e. rm_tl2 holds
     % those that will hit in two periods), and the equations are set up so that
@@ -378,23 +377,23 @@ if exist('nant','var')
 
     %note: belongs to eq_rm equation above^^
         G1(eq_rm,rm_tl1) = 1;
-    %___________________________________    
-        
+    %___________________________________
+
       G0(eq_rml1,rm_tl1) = 1;
       PSI(eq_rml1,rm_shl1) = 1;
 
       if nant > 1
         for i = 2:nant
           eval(strcat('G1(eq_rml',num2str(i-1),',rm_tl',num2str(i),') = 1;'));
-          %___________________________________    
-          
+          %___________________________________
+
           eval(strcat('G0(eq_rml',num2str(i),',rm_tl',num2str(i),') = 1;'));
           eval(strcat('PSI(eq_rml',num2str(i),',rm_shl',num2str(i),') = 1;'));
         end
       end
     end
 end
- 
+
 %******************************************
 %**    Rational Expectations Errors
 %*******************************************/
@@ -403,12 +402,12 @@ end
 G0(eq_Ec,c_t ) = 1;
 G1(eq_Ec,E_c) = 1;
  PIE(eq_Ec,Ec_sh ) = 1;
- 
+
 %* flexible prices and wages **/
 G0(eq_Ec_f,c_f_t ) = 1;
 G1(eq_Ec_f,E_c_f) = 1;
  PIE(eq_Ec_f,Ec_f_sh ) = 1;
- 
+
 %* E(q) **/
 %* sticky prices and wages **/
 G0(eq_Eqk,qk_t) = 1;
@@ -419,7 +418,7 @@ G1(eq_Eqk,E_qk) = 1;
 G0(eq_Eqk_f,qk_f_t ) = 1;
 G1(eq_Eqk_f,E_qk_f) = 1;
  PIE(eq_Eqk_f,Eqk_f_sh) = 1;
- 
+
 %* E(i) **/
 %* sticky prices and wages **/
 G0(eq_Ei,i_t ) = 1;
@@ -436,7 +435,7 @@ G1(eq_Ei_f,E_i_f) = 1;
 G0(eq_Epi,pi_t ) = 1;
 G1(eq_Epi,E_pi) = 1;
  PIE(eq_Epi,Epi_sh ) = 1;
- 
+
 %* E(l) **/
 %* sticky prices and wages **/
 G0(eq_EL,L_t ) = 1;
@@ -453,12 +452,12 @@ G1(eq_EL_f,E_L_f) = 1;
 G0(eq_Erk,rk_t ) = 1;
 G1(eq_Erk,E_rk) = 1;
  PIE(eq_Erk,Erk_sh ) = 1;
- 
+
 %* flexible prices and wages **/
 G0(eq_Erk_f,rk_f_t ) = 1;
 G1(eq_Erk_f,E_rk_f) = 1;
  PIE(eq_Erk_f,Erk_f_sh ) = 1;
- 
+
 %* E(w) **/
 %* sticky prices and wages **/
 G0(eq_Ew,w_t ) = 1;
@@ -474,7 +473,7 @@ PIE(eq_ERktil,ERktil_sh) = 1;
 
 %******************************************
 %% EXTRA STATES
-% These aren't strictly necessary, but they 
+% These aren't strictly necessary, but they
 % track lags or simplify the equations
 %*******************************************/
 
