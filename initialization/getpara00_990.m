@@ -7,7 +7,7 @@ function [alp,zeta_p,iota_p,del,ups,Bigphi,s2,h,ppsi,nu_l,zeta_w,iota_w,law,laf,
 
 
 nantpad = 20;
-  
+
 alp = para(1);
 zeta_p = para(2);
 iota_p = para(3);
@@ -38,7 +38,7 @@ sprd = (1+para(20)/100)^(1/4); %exp(para(21)/400);    %% st st spread from annua
 zeta_spb = para(21);
 gammstar = para(22);
 
-npara = 22; 
+npara = 22;
 
 
 %% exogenous processes - level
@@ -120,7 +120,7 @@ npara = npara+3;
 
 %% Parameters (implicit) -- from steady state
 
-zstar = log(gam+1)+(alp/(1-alp))*log(ups); 
+zstar = log(gam+1)+(alp/(1-alp))*log(ups);
 
 rstar = (1/bet)*exp(sigmac*zstar);
 
@@ -130,9 +130,7 @@ rkstar = sprd*rstar*ups - (1-del);%NOTE: includes "sprd*"
 
 wstar = (alp^(alp)*(1-alp)^(1-alp)*rkstar^(-alp)/Bigphi)^(1/(1-alp));
 
-% Lstar = 1;
-Lstar = (wstar/law/((1-gstar)*(alp/(1-alp)*wstar/rkstar)^alp/Bigphi-...
-    (1-(1-del)/ups*exp(-zstar))*ups*exp(zstar)*alp/(1-alp)*wstar/rkstar)/(1-h*exp(-zstar)))^(1/(1+nu_l));
+Lstar = 1;
 
 kstar = (alp/(1-alp))*wstar*Lstar/rkstar;
 
@@ -179,9 +177,12 @@ nkstar = nkfcn(zwstar,sigwstar,sprd);
 Rhostar = 1/nkstar-1;
 
 % evaluate wekstar and vkstar
-betbar=bet*exp((1-sigmac)*zstar);
-wekstar = (1-gammstar/betbar)*nkstar...
-    -gammstar/betbar*(sprd*(1-muestar*Gstar)-1);
+bstar = 1;
+Rstard = Rstarn * bstar; % rate of return on deposits
+betbar = Rstard/(pistar*exp(zstar));
+
+wekstar = (1-(gammstar*betbar))*nkstar...
+    -gammstar*betbar*(sprd*(1-muestar*Gstar)-1);
 vkstar = (nkstar-wekstar)/gammstar;
 
 % evaluate nstar and vstar
@@ -219,10 +220,10 @@ zeta_Gsigw = dGdsigmastar/Gstar*sigwstar;
 
 % elasticities for the net worth evolution
 zeta_nRk = gammstar*Rkstar/pistar/exp(zstar)*(1+Rhostar)*(1-muestar*Gstar*(1-zeta_Gw/zeta_zw));
-zeta_nR = gammstar/betbar*(1+Rhostar)*(1-nkstar+muestar*Gstar*sprd*zeta_Gw/zeta_zw);
+zeta_nR = gammstar*betbar*(1+Rhostar)*(1-nkstar+muestar*Gstar*sprd*zeta_Gw/zeta_zw);
 zeta_nqk = gammstar*Rkstar/pistar/exp(zstar)*(1+Rhostar)*(1-muestar*Gstar*(1+zeta_Gw/zeta_zw/Rhostar))...
-    -gammstar/betbar*(1+Rhostar);
-zeta_nn = gammstar/betbar+gammstar*Rkstar/pistar/exp(zstar)*(1+Rhostar)*muestar*Gstar*zeta_Gw/zeta_zw/Rhostar;
+    -gammstar*betbar*(1+Rhostar);
+zeta_nn = gammstar*betbar+gammstar*Rkstar/pistar/exp(zstar)*(1+Rhostar)*muestar*Gstar*zeta_Gw/zeta_zw/Rhostar;
 zeta_nmue = gammstar*Rkstar/pistar/exp(zstar)*(1+Rhostar)*muestar*Gstar*(1-zeta_Gw*zeta_zmue/zeta_zw);
 zeta_nsigw = gammstar*Rkstar/pistar/exp(zstar)*(1+Rhostar)*muestar*Gstar*(zeta_Gsigw-zeta_Gw/zeta_zw*zeta_zsigw);
 
