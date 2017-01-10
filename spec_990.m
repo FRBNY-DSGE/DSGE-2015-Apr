@@ -12,7 +12,7 @@
 
 %% ESTIMATION SETTINGS
   reoptimize = 0;     % Whether to reoptimize or use the mode as is
-  CH         = 0;     % Compute Hessian again
+  CH         = 1;     % Compute Hessian again
   nsim       = 10000; % Number of draws per posterior simulation block
   nblocks    = 22;    % Number of blocks
   nburn      = nsim*2;  % How many draws to discard as burn-in
