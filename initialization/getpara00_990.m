@@ -130,7 +130,9 @@ rkstar = sprd*rstar*ups - (1-del);%NOTE: includes "sprd*"
 
 wstar = (alp^(alp)*(1-alp)^(1-alp)*rkstar^(-alp)/Bigphi)^(1/(1-alp));
 
-Lstar = 1;
+% Lstar = 1;
+Lstar = (wstar/law/((1-gstar)*(alp/(1-alp)*wstar/rkstar)^alp/Bigphi-...
+    (1-(1-del)/ups*exp(-zstar))*ups*exp(zstar)*alp/(1-alp)*wstar/rkstar)/(1-h*exp(-zstar)))^(1/(1+nu_l));
 
 kstar = (alp/(1-alp))*wstar*Lstar/rkstar;
 
@@ -178,7 +180,7 @@ Rhostar = 1/nkstar-1;
 
 % evaluate wekstar and vkstar
 bstar = 1;
-Rstard = Rstarn * bstar; % rate of return on deposits
+Rstard = (1 + Rstarn/100) * bstar; % rate of return on deposits
 betbar = Rstard/(pistar*exp(zstar));
 
 wekstar = (1-(gammstar*betbar))*nkstar...
