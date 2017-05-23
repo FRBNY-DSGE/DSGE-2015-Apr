@@ -24,7 +24,7 @@ If you would like to change defaults for estimation and forecasts, see
 `spec_990.m`. There, you can modify
 
   - **Estimation Parameters**
-    - `reoptimize`: Whether to re-optimize and find the mode or use saved mode. 
+    - `reoptimize`: Whether to re-optimize and find the mode or use saved mode.
     - `CH`: Whether to re-compute the hession or use saved.
     - `nsim`: The number of posterior draws per block.
     - `nblocks`: The number of blocks.
@@ -38,6 +38,23 @@ If you would like to change defaults for estimation and forecasts, see
       by the user as data).
     - `distr`: Flag to specify whether to parallelize the forecast procedure.
     - `nMaxWorkers`: Number of workers to use in parallel forecast procedure.
+
+## Troubleshooting
+
+Some common issues that may arise while running with default settings include:
+
+- **Can't load modal parameters:** Check that you're running `Main` in the base
+  (`DSGE-2015-Apr`) directory. Our code uses relative paths throughout,
+  including to specify the location of the mode file (`save/mode_in`), so it
+  won't be found if you're in a subdirectory.
+
+- **Negative diagonal element in Hessian:** Make sure that you're reading in the
+  provided mode file correctly. If you set `reoptimize = 1` and re-ran
+  `csminwel` before computing the Hessian, it's possible that you haven't found
+  a true mode (perhaps because not enough iterations were used).
+
+- Finally, see the section "Final Notes on MATLAB Versions and Toolboxes" below.
+
 
 # Directory Structure
 
@@ -63,7 +80,7 @@ components:
 
 This section describes important programs in greater detail. If the user
 is interested only in running the default model and reproducing the forecast
-results, this section can be ignored. 
+results, this section can be ignored.
 
 This section focuses on what the code does and why, while the code itself
 (including comments) provides detailed information regarding *how* these basic
@@ -95,7 +112,7 @@ equation matrices implied by each draw of the parameter vector. This is to save
 time in the forecasting step since that code can avoid recomputing those
 matrices. In addition, to save space, all files in `save/` are binary files.
 
-## Forecasting 
+## Forecasting
 
 **Main Program**: `forecast/forecast_parallel_est_ant.m`
 
@@ -138,7 +155,7 @@ Bands structures and avoid recomputing, set `useSavedMB=1` before running
 `forplot.m`.
 
 # Final Notes on MATLAB Versions and Toolboxes
- 
+
 In certain functions implemented in this program are Toolbox functions provided
 by Mathworks. If you are receiving errors in running these programs due to
 undefined functions, it is likely because you do not yet have access to these
@@ -161,7 +178,7 @@ distributed works.   Neither the name of the Federal Reserve Bank of New York
 works derived from this code without prior written permission.  Portions of the
 code attributed to third parties are subject to applicable third party licenses
 and rights.  By your use of this code you accept this license and any
-applicable third party license.  
+applicable third party license.
 
 THIS CODE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT ANY WARRANTIES OR CONDITIONS
 OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY
