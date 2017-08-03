@@ -178,7 +178,7 @@ Rhostar = 1/nkstar-1;
 
 % evaluate wekstar and vkstar
 bstar = 1;
-Rstard = Rstarn * bstar; % rate of return on deposits
+Rstard = (1 + Rstarn/100) * bstar; % rate of return on deposits
 betbar = Rstard/(pistar*exp(zstar));
 
 wekstar = (1-(gammstar*betbar))*nkstar...
