@@ -168,7 +168,8 @@ run these programs using a more recent version of Matlab, it is possible that
 some of the Matlab-defined functions are not identical and thus may yield
 nonidentical results.
 
-# DISCLAIMER
+Disclaimer
+-----
 
 Copyright Federal Reserve Bank of New York.  You may reproduce, use, modify,
 make derivative works of, and distribute and this code in whole or in part so
