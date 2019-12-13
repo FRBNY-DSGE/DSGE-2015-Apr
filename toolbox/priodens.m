@@ -33,7 +33,7 @@ function lnprior = priodens(para,pmean,pstdd,pshape);
       b = pstdd(i);
       %a= (.0264/b).^.5
       %para(i)
-      lnprior = lnprior +log(2)-gammaln(b/2)+(b/2)*log(b*a^2/2)-((b+1)/2)*log(para(i)^2)-b*a^2/(2*para(i)^2);
+      lnprior = lnprior -gammaln(b/2)+(b/2)*log(b*a^2/2)-(b/2+1)*log(para(i))-b*a^2/(2*para(i));
       %v =log(2)-gammaln(b/2)+(b/2)*log(b*a^2/2)-((b+1)/2)*log(para(i)^2)-b*a^2/(2*para(i)^2)
     elseif prioinfo(i,3) == 5; % UNIFORM PRIOR pmean(i)=leftbound, pstdd(i)=rightbound
       a = pmean(i);% - sqrt(3)*pstdd(i);
